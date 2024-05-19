@@ -10,17 +10,16 @@
     </v-row>
   </v-footer>
 </template>
-<script>
-export default {
-  data: () => ({
-    links: [
-      'Home',
-      'About Us',
-      'Team',
-      'Services',
-      'Blog',
-      'Contact Us',
-    ],
-  }),
-}
+<script lang="ts" setup>
+import { ref } from 'vue';
+const links = ref<string[]>([
+  'Home',
+  'About Us',
+  'Team',
+  'Services',
+  'Blog',
+  'Contact Us',
+])
+
+
 </script>

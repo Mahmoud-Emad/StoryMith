@@ -92,7 +92,7 @@
 <script lang="ts">
 import * as THREE from 'three'
 import { onMounted, ref, defineComponent } from 'vue'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import type { CountryDetailsType, StoryDetails } from '@/utils/types';
 
 export default defineComponent({
