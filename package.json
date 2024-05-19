@@ -10,12 +10,14 @@
     "test:unit": "vitest",
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force",
+    "deploy": "gh-pages -d dist",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
     "@types/three": "^0.164.0",
+    "gh-pages": "^6.1.1",
     "gsap": "^3.12.5",
     "mdi": "^2.2.43",
     "pinia": "^2.1.7",
