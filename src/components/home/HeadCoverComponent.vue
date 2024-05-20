@@ -107,7 +107,7 @@ import { ref } from "vue";
 }
 
 .home-bg {
-  background-image: url(/public/images/world_map_preview.png);
+  background-image: url(/images/world_map_preview.png);
   background-repeat: no-repeat;
   background-position: 300px 240px;
 }

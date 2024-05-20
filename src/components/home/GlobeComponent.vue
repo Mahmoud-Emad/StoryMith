@@ -6,7 +6,6 @@
       </v-col>
       <v-col class="d-flex justify-end">
         <v-btn to="/topics" variant="tonal" color="primary" prepend-icon="mdi-compass" class="discover-more-btn">
-          See more
         </v-btn>
       </v-col>
     </v-row>
@@ -97,6 +96,8 @@ import type { CountryDetailsType, StoryDetails } from '@/utils/types';
 
 export default defineComponent({
   setup() {
+    const isDev = import.meta.env.DEV
+
     const container = ref<HTMLElement | null>(null)
     const hoverCard = ref<HTMLElement | null>(null)
     const EARTH_RADIUS = 3
@@ -143,7 +144,7 @@ export default defineComponent({
 
         // Globe setup
         const globeGeometry = new THREE.SphereGeometry(EARTH_RADIUS, 55, 55)
-        const globeTexture = new THREE.TextureLoader().load('/public/images/earth_texture.jpg')
+        const globeTexture = new THREE.TextureLoader().load(`/images/earth_texture.jpg`)
         const globeMaterial = new THREE.MeshBasicMaterial({ map: globeTexture })
         const globe = new THREE.Mesh(globeGeometry, globeMaterial)
         scene.add(globe)
@@ -291,7 +292,7 @@ export default defineComponent({
               author: {
                 id: 105,
                 name: "Nishant Aanjaney Jalan",
-                profileImageUrl: "/public/images/users/user5.png",
+                profileImageUrl: "/images/users/user5.png",
               },
             }
             // hoverCountry.value = country
@@ -337,7 +338,7 @@ export default defineComponent({
     return {
       container,
       hoverCard,
-      initialStory
+      initialStory,
     }
   }
 })

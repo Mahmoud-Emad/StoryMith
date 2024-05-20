@@ -52,11 +52,11 @@ const stories = reactive<StoryDetails[]>([
   {
     id: 1,
     title: "Stop Using localStorage!",
-    coverURL: "/public/images/books/cover_1.png",
+    coverURL: "/images/books/cover_1.png",
     author: {
       id: 1,
       name: "Julien Etienne",
-      profileImageUrl: "/public/images/users/user3.png",
+      profileImageUrl: "/images/users/user3.png",
     },
     description: "The title is not clickbait, the message is abrupt “Stop Using localStorage!",
     date: "Dec 22, 2023"
@@ -64,11 +64,11 @@ const stories = reactive<StoryDetails[]>([
   {
     id: 2,
     title: "Reactive DOM — Finally",
-    coverURL: "/public/images/books/cover_2.png",
+    coverURL: "/images/books/cover_2.png",
     author: {
       id: 1,
       name: "Elson",
-      profileImageUrl: "/public/images/users/user2.png",
+      profileImageUrl: "/images/users/user2.png",
     },
     description: "DOM API should not be the reason to avoid building with Vanilla JavaScript.",
     date: "Apr 21, 2024"
@@ -76,11 +76,11 @@ const stories = reactive<StoryDetails[]>([
   {
     id: 3,
     title: "It’s Okay to Be A Loser",
-    coverURL: "/public/images/books/cover_3.png",
+    coverURL: "/images/books/cover_3.png",
     author: {
       id: 1,
       name: "Godfrey The Great",
-      profileImageUrl: "/public/images/users/user1.png",
+      profileImageUrl: "/images/users/user1.png",
     },
     description: "Most people today can’t shut up.",
     date: "Nov 16, 2023"
@@ -88,11 +88,11 @@ const stories = reactive<StoryDetails[]>([
   {
     id: 4,
     title: "The Age Paradox",
-    coverURL: "/public/images/books/cover_4.png",
+    coverURL: "/images/books/cover_4.png",
     author: {
       id: 4,
       name: "chel writes",
-      profileImageUrl: "/public/images/users/user4.png",
+      profileImageUrl: "/images/users/user4.png",
     },
     description: "An internal perception and external response",
     date: "Jan 4, 2024"
