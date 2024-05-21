@@ -21,3 +21,10 @@ export type StoryDetails = {
     received: CountryDetailsType
   }
 }
+
+export type TopicDetails = {
+  name: string;
+  icon: string;
+  stories: string;
+  writers: string;
+}

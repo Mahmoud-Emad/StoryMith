@@ -1,161 +1,216 @@
 <template>
-  <section class="stories">
+  <loading-section-componentfrom
+    :is-loading="loadingStories"
+    :loading-message="loadingMessage"
+    :is-stories="true"
+    v-if="loadingStories"
+  />
+
+  <section class="home-sections stories" v-else>
     <v-row>
-      <v-col>
-        <h4 class="text-grey-darken-1">Various narratives</h4>
+      <v-col cols="12">
+        <v-row>
+          <v-col>
+            <h4 class="text-grey-darken-1">Various narratives</h4>
+          </v-col>
+          <v-col class="d-flex justify-end">
+            <v-btn
+              to="/topics"
+              variant="tonal"
+              color="primary"
+              prepend-icon="mdi-compass"
+              class="discover-more-btn"
+            >
+              Discover stories
+            </v-btn>
+          </v-col>
+        </v-row>
       </v-col>
-      <v-col class="d-flex justify-end">
-        <v-btn to="/topics" variant="tonal" color="primary" prepend-icon="mdi-compass" class="discover-more-btn">
-          Discover stories
-        </v-btn>
-      </v-col>
-    </v-row>
-    <v-row class="d-flex justify-center mt-0">
-      <v-col cols="3" v-for="(story, index) in stories" :key="index">
-        <router-link :to="`stories/${story.id}`" class="w-100" style="color: black;">
-          <div class="book">
-            <div class="book-cover" :style="{ backgroundImage: `url(${story.coverURL})` }">
-              <div class="overlay"></div>
-              <div class="title"
-                :style="{ backgroundColor: titleBackgroundColors[index], color: titleTextColors[index] }">
-                <strong>{{ story.title }}</strong>
+      <v-col cols="12">
+        <v-row class="d-flex justify-center mt-0">
+          <v-col cols="3" v-for="(story, index) in stories" :key="index">
+            <router-link :to="`stories/${story.id}`" class="w-100" style="color: black">
+              <div class="book">
+                <div class="book-cover" :style="{ backgroundImage: `url(${story.coverURL})` }">
+                  <div class="overlay"></div>
+                  <div
+                    class="title"
+                    :style="{
+                      backgroundColor: titleBackgroundColors[index],
+                      color: titleTextColors[index]
+                    }"
+                  >
+                    <strong>{{ story.title }}</strong>
+                  </div>
+                  <div class="description">
+                    <small>{{
+                      story.description.length > 35
+                        ? story.description.slice(0, 35) + '...'
+                        : story.description
+                    }}</small>
+                  </div>
+                  <div class="author">
+                    <v-img class="author-img" :src="story.author.profileImageUrl" />
+                  </div>
+                  <div class="author-name">
+                    <small>{{ story.author.name }}</small>
+                  </div>
+                  <div class="light"></div>
+                </div>
+                <div class="book-inside"></div>
               </div>
-              <div class="description">
-                <small>{{ story.description.length > 35 ? story.description.slice(0, 35) + '...' :
-                  story.description }}</small>
-              </div>
-              <div class="author">
-                <v-img class="author-img" :src="story.author.profileImageUrl" />
-              </div>
-              <div class="author-name">
-                <small>{{ story.author.name }}</small>
-              </div>
-              <div class="light"></div>
-            </div>
-            <div class="book-inside">
-            </div>
-          </div>
-        </router-link>
+            </router-link>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
   </section>
 </template>
 
-<script setup lang="ts">
-import type { StoryDetails } from '@/utils/types';
-import { onMounted, ref, reactive } from 'vue';
+<script lang="ts">
+import type { StoryDetails } from '@/utils/types'
+import { onMounted, ref, reactive, defineComponent } from 'vue'
+import LoadingSectionComponentfrom from '@/components/ui/LoadingSectionComponent.vue'
 
-const titleBackgroundColors = ref<string[]>([]);
-const titleTextColors = ref<string[]>([]);
-
-const stories = reactive<StoryDetails[]>([
-  {
-    id: 1,
-    title: "Stop Using localStorage!",
-    coverURL: "/public/images/books/cover_1.png",
-    author: {
-      id: 1,
-      name: "Julien Etienne",
-      profileImageUrl: "/public/images/users/user3.png",
-    },
-    description: "The title is not clickbait, the message is abrupt “Stop Using localStorage!",
-    date: "Dec 22, 2023"
+export default defineComponent({
+  components: {
+    LoadingSectionComponentfrom
   },
-  {
-    id: 2,
-    title: "Reactive DOM — Finally",
-    coverURL: "/public/images/books/cover_2.png",
-    author: {
-      id: 1,
-      name: "Elson",
-      profileImageUrl: "/public/images/users/user2.png",
-    },
-    description: "DOM API should not be the reason to avoid building with Vanilla JavaScript.",
-    date: "Apr 21, 2024"
-  },
-  {
-    id: 3,
-    title: "It’s Okay to Be A Loser",
-    coverURL: "/public/images/books/cover_3.png",
-    author: {
-      id: 1,
-      name: "Godfrey The Great",
-      profileImageUrl: "/public/images/users/user1.png",
-    },
-    description: "Most people today can’t shut up.",
-    date: "Nov 16, 2023"
-  },
-  {
-    id: 4,
-    title: "The Age Paradox",
-    coverURL: "/public/images/books/cover_4.png",
-    author: {
-      id: 4,
-      name: "chel writes",
-      profileImageUrl: "/public/images/users/user4.png",
-    },
-    description: "An internal perception and external response",
-    date: "Jan 4, 2024"
-  },
-])
+  setup() {
+    const loadingStories = ref(false)
+    const loadingMessage = ref('Loading stories')
 
-onMounted(() => {
-  // Process cover images to extract dominant colors for titles
-  stories.forEach((story) => {
-    processCoverImage(story.coverURL!);
-  });
-});
+    const titleBackgroundColors = ref<string[]>([])
+    const titleTextColors = ref<string[]>([])
+    const stories = reactive<StoryDetails[]>([])
 
-const processCoverImage = (coverUrl: string) => {
-  const canvas = document.createElement('canvas');
-  const context = canvas.getContext('2d');
-  const img = new Image();
+    onMounted(() => {
+      loadingStories.value = true
+      const _stories = getStories()
+      stories.push(..._stories)
+      stories.forEach((story) => {
+        processCoverImage(story.coverURL!)
+      })
 
-  img.crossOrigin = "Anonymous";
-  img.src = coverUrl;
+      setTimeout(() => {
+        // TODO: Remove the timeout after intgrating with the backend.
+        loadingStories.value = false
+        loadingMessage.value = ''
+      }, 1000)
+    })
 
-  img.onload = () => {
-    canvas.width = img.width;
-    canvas.height = img.height;
-    if (context) {
-      context.drawImage(img, 0, 0);
-
-      const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-      const pixelArray = imageData.data;
-
-      let totalRed = 0;
-      let totalGreen = 0;
-      let totalBlue = 0;
-
-      for (let i = 0; i < pixelArray.length; i += 4) {
-        totalRed += pixelArray[i];
-        totalGreen += pixelArray[i + 1];
-        totalBlue += pixelArray[i + 2];
-      }
-
-      const averageRed = totalRed / (pixelArray.length / 4);
-      const averageGreen = totalGreen / (pixelArray.length / 4);
-      const averageBlue = totalBlue / (pixelArray.length / 4);
-
-      // Calculate luminance
-      const luminance = (0.299 * averageRed + 0.587 * averageGreen + 0.114 * averageBlue) / 255;
-
-      // Set title text color based on luminance
-      const textColor = luminance > 0.5 ? 'black' : 'white';
-
-      titleBackgroundColors.value.push(`rgb(${averageRed},${averageGreen},${averageBlue})`);
-      titleTextColors.value.push(textColor);
+    function getStories() {
+      return [
+        {
+          id: 1,
+          title: 'Stop Using localStorage!',
+          coverURL: '/public/images/books/cover_1.png',
+          author: {
+            id: 1,
+            name: 'Julien Etienne',
+            profileImageUrl: '/public/images/users/user3.png'
+          },
+          description:
+            'The title is not clickbait, the message is abrupt “Stop Using localStorage!',
+          date: 'Dec 22, 2023'
+        },
+        {
+          id: 2,
+          title: 'Reactive DOM — Finally',
+          coverURL: '/public/images/books/cover_2.png',
+          author: {
+            id: 1,
+            name: 'Elson',
+            profileImageUrl: '/public/images/users/user2.png'
+          },
+          description:
+            'DOM API should not be the reason to avoid building with Vanilla JavaScript.',
+          date: 'Apr 21, 2024'
+        },
+        {
+          id: 3,
+          title: 'It’s Okay to Be A Loser',
+          coverURL: '/public/images/books/cover_3.png',
+          author: {
+            id: 1,
+            name: 'Godfrey The Great',
+            profileImageUrl: '/public/images/users/user1.png'
+          },
+          description: 'Most people today can’t shut up.',
+          date: 'Nov 16, 2023'
+        },
+        {
+          id: 4,
+          title: 'The Age Paradox',
+          coverURL: '/public/images/books/cover_4.png',
+          author: {
+            id: 4,
+            name: 'chel writes',
+            profileImageUrl: '/public/images/users/user4.png'
+          },
+          description: 'An internal perception and external response',
+          date: 'Jan 4, 2024'
+        }
+      ]
     }
-  };
-};
+
+    function processCoverImage(coverUrl: string) {
+      const canvas = document.createElement('canvas')
+      const context = canvas.getContext('2d')
+      const img = new Image()
+
+      img.crossOrigin = 'Anonymous'
+      img.src = coverUrl
+
+      img.onload = () => {
+        canvas.width = img.width
+        canvas.height = img.height
+        if (context) {
+          context.drawImage(img, 0, 0)
+
+          const imageData = context.getImageData(0, 0, canvas.width, canvas.height)
+          const pixelArray = imageData.data
+
+          let totalRed = 0
+          let totalGreen = 0
+          let totalBlue = 0
+
+          for (let i = 0; i < pixelArray.length; i += 4) {
+            totalRed += pixelArray[i]
+            totalGreen += pixelArray[i + 1]
+            totalBlue += pixelArray[i + 2]
+          }
+
+          const averageRed = totalRed / (pixelArray.length / 4)
+          const averageGreen = totalGreen / (pixelArray.length / 4)
+          const averageBlue = totalBlue / (pixelArray.length / 4)
+
+          // Calculate luminance
+          const luminance = (0.299 * averageRed + 0.587 * averageGreen + 0.114 * averageBlue) / 255
+
+          // Set title text color based on luminance
+          const textColor = luminance > 0.5 ? 'black' : 'white'
+
+          titleBackgroundColors.value.push(`rgb(${averageRed},${averageGreen},${averageBlue})`)
+          titleTextColors.value.push(textColor)
+        }
+      }
+    }
+
+    return {
+      loadingStories,
+      loadingMessage,
+      stories,
+      titleBackgroundColors,
+      titleTextColors
+    }
+  }
+})
 </script>
 
 <style scoped>
 .stories {
-  margin-top: 15px;
-  margin-bottom: 80px;
-  border-bottom: 0.5px solid #f5e5e5 !important;
-  height: 450px;
+  height: 480px;
 }
 
 .book {
@@ -178,8 +233,8 @@ const processCoverImage = (coverUrl: string) => {
   box-shadow:
     inset 4px 1px 3px #ffffff60,
     inset 0 -1px 2px #00000080;
-  transition: all .5s ease-in-out;
-  -webkit-transition: all .5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
 }
 
 .book .book-cover .overlay {
@@ -188,7 +243,6 @@ const processCoverImage = (coverUrl: string) => {
   height: 100%;
   position: absolute;
   top: 0px;
-
 }
 
 .book .book-cover .title {
@@ -245,9 +299,13 @@ const processCoverImage = (coverUrl: string) => {
   width: 22px;
   height: 100%;
   border-left: 2px solid #00000010;
-  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
-  transition: all .5s ease;
-  content: "";
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transition: all 0.5s ease;
+  content: '';
   display: block;
   margin-left: -22px;
   background: #0000000f;
@@ -258,12 +316,16 @@ const processCoverImage = (coverUrl: string) => {
   height: 100%;
   position: absolute;
   border-radius: 3px;
-  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
   top: 0;
   right: 0;
-  opacity: .1;
-  transition: all .5s ease;
-  -webkit-transition: all .5s ease;
+  opacity: 0.1;
+  transition: all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
 }
 
 .book:hover {
@@ -278,7 +340,7 @@ const processCoverImage = (coverUrl: string) => {
   box-shadow:
     inset 4px 1px 3px #ffffff60,
     inset 0 -1px 2px #00000080,
-    10px 0px 10px -5px #00000030
+    10px 0px 10px -5px #00000030;
 }
 
 .book:hover .light {

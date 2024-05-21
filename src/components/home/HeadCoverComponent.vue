@@ -1,14 +1,15 @@
 <template>
-  <section class="home home-bg">
+  <section class="home-sections home home-bg">
     <v-row class="d-flex align-center">
-      <v-col class="d-flex align-center" style="height: 500px;">
+      <v-col class="d-flex align-center">
         <v-row>
           <v-col cols="12">
             <h1 class="home-title">Explore, Discover, Inspire.</h1>
           </v-col>
           <v-col>
             <em class="home-body">
-              “Explore the world through words; where stories become journeys and ideas take flight.”
+              “Explore the world through words; where stories become journeys and ideas take
+              flight.”
             </em>
           </v-col>
         </v-row>
@@ -19,11 +20,17 @@
           <router-link class="w-100" to="">
             <v-col cols="12" class="pa-0 d-flex justify-end">
               <div class="d-flex align-center justify-start">
-                <v-icon class="versatility-icon card-icon"
-                  :class="{ 'versatility-icon-hovered': versatilityHovered }">mdi-earth</v-icon>
+                <v-icon
+                  class="versatility-icon card-icon"
+                  :class="{ 'versatility-icon-hovered': versatilityHovered }"
+                  >mdi-earth</v-icon
+                >
               </div>
-              <v-card class="home-card right-border-card ml-3 versatility-card" @mouseover="versatilityHovered = true"
-                @mouseleave="versatilityHovered = false">
+              <v-card
+                class="home-card right-border-card ml-3 versatility-card"
+                @mouseover="versatilityHovered = true"
+                @mouseleave="versatilityHovered = false"
+              >
                 <strong class="card-hint">Versatility</strong>
                 Discover diverse topics, all in one spot.
               </v-card>
@@ -33,14 +40,18 @@
           <router-link class="w-100" to="">
             <!-- Left card -->
             <v-col cols="12" class="pa-0 d-flex justify-end">
-              <v-card class="home-card left-border-card mr-3 social-card" @mouseover="socialHovered = true"
-                @mouseleave="socialHovered = false">
+              <v-card
+                class="home-card left-border-card mr-3 social-card"
+                @mouseover="socialHovered = true"
+                @mouseleave="socialHovered = false"
+              >
                 <strong class="card-hint">Streamline</strong>
                 Real-Time updates.
               </v-card>
               <div class="d-flex align-center justify-end">
-                <v-icon class="social-icon"
-                  :class="{ 'social-icon-hovered': socialHovered }">mdi-comment-multiple</v-icon>
+                <v-icon class="social-icon" :class="{ 'social-icon-hovered': socialHovered }"
+                  >mdi-comment-multiple</v-icon
+                >
               </div>
             </v-col>
           </router-link>
@@ -49,11 +60,15 @@
             <!-- Right card -->
             <v-col cols="12" class="pa-0 d-flex justify-end">
               <div class="d-flex align-center justify-start">
-                <v-icon class="idea-icon card-icon"
-                  :class="{ 'idea-icon-hovered': ideaHovered }">mdi-lightbulb-on-outline</v-icon>
+                <v-icon class="idea-icon card-icon" :class="{ 'idea-icon-hovered': ideaHovered }"
+                  >mdi-lightbulb-on-outline</v-icon
+                >
               </div>
-              <v-card class="home-card right-border-card ml-3 idea-card" @mouseover="ideaHovered = true"
-                @mouseleave="ideaHovered = false">
+              <v-card
+                class="home-card right-border-card ml-3 idea-card"
+                @mouseover="ideaHovered = true"
+                @mouseleave="ideaHovered = false"
+              >
                 <strong class="card-hint">Innovative</strong>
                 All of the stories embody innovation.
               </v-card>
@@ -63,14 +78,18 @@
           <router-link to="" class="w-100">
             <!-- Left card -->
             <v-col cols="12" class="pa-0 d-flex justify-end">
-              <v-card class="home-card left-border-card mr-3 easy-card" @mouseover="easyHovered = true"
-                @mouseleave="easyHovered = false">
+              <v-card
+                class="home-card left-border-card mr-3 easy-card"
+                @mouseover="easyHovered = true"
+                @mouseleave="easyHovered = false"
+              >
                 <strong class="card-hint">Effortless</strong>
                 StoryMith is designed to be easy to use.
               </v-card>
               <div class="d-flex align-center justify-end">
-                <v-icon class="easy-icon"
-                  :class="{ 'social-icon-hovered': easyHovered }">mdi-cursor-default-click-outline</v-icon>
+                <v-icon class="easy-icon" :class="{ 'social-icon-hovered': easyHovered }"
+                  >mdi-cursor-default-click-outline</v-icon
+                >
               </div>
             </v-col>
           </router-link>
@@ -81,23 +100,19 @@
 </template>
 
 <script lang="ts">
-const versatilityHovered = ref(false);
-const socialHovered = ref(false);
-const ideaHovered = ref(false);
-const easyHovered = ref(false);
+const versatilityHovered = ref(false)
+const socialHovered = ref(false)
+const ideaHovered = ref(false)
+const easyHovered = ref(false)
 </script>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref } from 'vue'
 </script>
-
-
 
 <style scoped>
 .home {
-  margin-top: 15px;
-  margin-bottom: 80px;
-  border-bottom: 0.5px solid #f5e5e5 !important;
+  /* height: 500px; */
 }
 
 .home-title {
@@ -161,7 +176,7 @@ import { ref } from "vue";
 .card-hint::after {
   margin-left: 3px !important;
   border-right: 2px solid rgb(196, 196, 196) !important;
-  content: "";
+  content: '';
 }
 
 .social-card {

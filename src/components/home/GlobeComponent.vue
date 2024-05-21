@@ -1,89 +1,104 @@
 <template>
-  <section class="globe">
-    <v-row>
-      <v-col>
-        <h4 class="text-grey-darken-1">Real-Time updates</h4>
-      </v-col>
-      <v-col class="d-flex justify-end">
-        <v-btn to="/topics" variant="tonal" color="primary" prepend-icon="mdi-compass" class="discover-more-btn">
-          See more
-        </v-btn>
-      </v-col>
-    </v-row>
+  <loading-section-componentfrom
+    :is-loading="loadingGlobe"
+    :loading-message="loadingMessage"
+    v-if="loadingGlobe"
+  />
 
-    <v-row class="d-flex justify-center mt-0">
-      <v-col cols="6" class="d-flex align-center">
+  <section name="globe" class="home-sections globe" v-else>
+    <v-row>
+      <v-col cols="12">
         <v-row>
-          <v-col cols="12">
-            <h1 class="realtime-h1">
-              <em>“Experience Real-Time Stories from Across the Globe”</em>
-            </h1>
+          <v-col>
+            <h4 class="text-grey-darken-1">Real-Time updates</h4>
           </v-col>
-          <v-col cols="12">
-            <p class="realtime-body">
-              Stay connected with our platform and immerse yourself in a world of real-time updates.
-              Explore captivating stories, breaking news, and insightful articles as they unfold,
-              providing you with a dynamic and ever-evolving reading experience. Dive into the pulse
-              of the world with our real-time updates, keeping you informed and engaged with the
-              latest happenings across various topics and regions.
-            </p>
+          <v-col class="d-flex justify-end">
+            <v-btn
+              to="/topics"
+              variant="tonal"
+              color="primary"
+              prepend-icon="mdi-compass"
+              class="discover-more-btn"
+            >
+              See more
+            </v-btn>
           </v-col>
         </v-row>
       </v-col>
-      <v-col cols="6" style="position: relative">
-        <div ref="container" class="globe-container"></div>
-        <div class="text-center w-100" style="margin-top: -55px;">
-          <strong>
-            <small style="color: gray;">
-              <em>
-                Hover over the country to see details of the trending story.
-              </em>
-            </small>
-          </strong>
-        </div>
-        <div ref="hoverCard" class="hover-card" v-if="initialStory">
-          <!-- author image -->
-          <div class="author">
-            <v-img class="author-image-img" :src="initialStory.author.profileImageUrl" />
-            <div class="detials">
-              <strong class="author-name">
-                {{ initialStory.author.name }}
+      <v-col cols="12">
+        <v-row class="d-flex justify-center mt-0">
+          <v-col cols="6" class="d-flex align-center">
+            <v-row>
+              <v-col cols="12">
+                <h1 class="realtime-h1">
+                  <em>“Experience Real-Time Stories from Across the Globe”</em>
+                </h1>
+              </v-col>
+              <v-col cols="12">
+                <p class="realtime-body">
+                  Stay connected with our platform and immerse yourself in a world of real-time
+                  updates. Explore captivating stories, breaking news, and insightful articles as
+                  they unfold, providing you with a dynamic and ever-evolving reading experience.
+                  Dive into the pulse of the world with our real-time updates, keeping you informed
+                  and engaged with the latest happenings across various topics and regions.
+                </p>
+              </v-col>
+            </v-row>
+          </v-col>
+          <v-col cols="6" style="position: relative">
+            <div ref="container" class="globe-container"></div>
+            <div class="text-center w-100" style="margin-top: -55px">
+              <strong>
+                <small style="color: gray">
+                  <em> Hover over the country to see details of the trending story. </em>
+                </small>
               </strong>
-              <div class="date-follow">
-                <small class="story-date">{{ initialStory.date }}</small>
+            </div>
+            <div ref="hoverCard" class="hover-card" v-if="initialStory">
+              <!-- author image -->
+              <div class="author">
+                <v-img class="author-image-img" :src="initialStory.author.profileImageUrl" />
+                <div class="detials">
+                  <strong class="author-name">
+                    {{ initialStory.author.name }}
+                  </strong>
+                  <div class="date-follow">
+                    <small class="story-date">{{ initialStory.date }}</small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- story details -->
+              <div class="story">
+                <strong class="story-title">{{ initialStory.title }}</strong>
+                <v-img class="story-img-cover" :src="initialStory.coverURL" />
+                <small class="story-description">
+                  <em>
+                    {{ initialStory.description }}
+                  </em>
+                </small>
+              </div>
+
+              <!-- countries details -->
+              <div class="countries-details">
+                <small class="countries-details-published">
+                  <li>
+                    <em>
+                      This story is posted from
+                      <span class="strong text-primary">
+                        {{ initialStory.countryDetails?.published.name }}
+                      </span>
+                      and now it's a trend in
+                      <span class="strong text-primary">
+                        {{ initialStory.countryDetails?.received.name }}
+                      </span>
+                    </em>
+                  </li>
+                </small>
               </div>
             </div>
-          </div>
-
-          <!-- story details -->
-          <div class="story">
-            <strong class="story-title">{{ initialStory.title }}</strong>
-            <v-img class="story-img-cover" :src="initialStory.coverURL" />
-            <small class="story-description">
-              <em>
-                {{ initialStory.description }}
-              </em>
-            </small>
-          </div>
-
-          <!-- countries details -->
-          <div class="countries-details">
-            <small class="countries-details-published">
-              <li>
-                <em>
-                  This story is posted from
-                  <span class="strong text-primary">
-                    {{ initialStory.countryDetails?.published.name }}
-                  </span>
-                  and now it's a trend in
-                  <span class="strong text-primary">
-                    {{ initialStory.countryDetails?.received.name }}
-                  </span>
-                </em>
-              </li>
-            </small>
-          </div>
-        </div>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
   </section>
@@ -92,11 +107,16 @@
 <script lang="ts">
 import * as THREE from 'three'
 import { onMounted, ref, defineComponent } from 'vue'
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import type { CountryDetailsType, StoryDetails } from '@/utils/types';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import type { CountryDetailsType, StoryDetails } from '@/utils/types'
+import LoadingSectionComponentfrom from '@/components/ui/LoadingSectionComponent.vue'
 
 export default defineComponent({
+  components: { LoadingSectionComponentfrom },
   setup() {
+    const loadingGlobe = ref(false)
+    const loadingMessage = ref('Loading globe')
+
     const container = ref<HTMLElement | null>(null)
     const hoverCard = ref<HTMLElement | null>(null)
     const EARTH_RADIUS = 3
@@ -119,6 +139,7 @@ export default defineComponent({
     let marks: THREE.Mesh[] = []
 
     onMounted(() => {
+      loadingGlobe.value = true
       if (container.value) {
         // Camera setup
         const camera = new THREE.PerspectiveCamera(20, 750 / 550, 0.1, 1000)
@@ -138,8 +159,8 @@ export default defineComponent({
         controls.enableDamping = false
         controls.enablePan = false
         controls.enableZoom = false
-        controls.autoRotate = true;
-        controls.autoRotateSpeed = 1;
+        controls.autoRotate = true
+        controls.autoRotateSpeed = 1
 
         // Globe setup
         const globeGeometry = new THREE.SphereGeometry(EARTH_RADIUS, 55, 55)
@@ -272,17 +293,18 @@ export default defineComponent({
           mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1
           raycaster.setFromCamera(mouse, camera)
 
-          let intersects = raycaster.intersectObjects(marks);
+          let intersects = raycaster.intersectObjects(marks)
           if (intersects.length > 0) {
             const intersected = intersects[0].object
             const country = intersected.userData as CountryDetailsType
             // We need to handle the API here.
             initialStory.value = {
               id: 1502,
-              title: "Programming Principles They Don’t Teach You In School",
-              description: "Introduction to important principles you should know — DRY, KISS, SOLID",
-              date: "Mar 3, 2023",
-              coverURL: "/public/images/stories/story1.png",
+              title: 'Programming Principles They Don’t Teach You In School',
+              description:
+                'Introduction to important principles you should know — DRY, KISS, SOLID',
+              date: 'Mar 3, 2023',
+              coverURL: '/public/images/stories/story1.png',
 
               countryDetails: {
                 published: country,
@@ -290,9 +312,9 @@ export default defineComponent({
               },
               author: {
                 id: 105,
-                name: "Nishant Aanjaney Jalan",
-                profileImageUrl: "/public/images/users/user5.png",
-              },
+                name: 'Nishant Aanjaney Jalan',
+                profileImageUrl: '/public/images/users/user5.png'
+              }
             }
             // hoverCountry.value = country
 
@@ -330,14 +352,18 @@ export default defineComponent({
 
         container.value.addEventListener('mousemove', onMouseMove)
         // container.value.addEventListener('click', onMouseClick);
-
       }
+
+      loadingGlobe.value = false
+      loadingMessage.value = ''
     })
 
     return {
       container,
       hoverCard,
-      initialStory
+      initialStory,
+      loadingGlobe,
+      loadingMessage
     }
   }
 })
@@ -345,9 +371,6 @@ export default defineComponent({
 
 <style scoped>
 .globe {
-  margin-top: 15px;
-  margin-bottom: 80px;
-  border-bottom: 0.5px solid #f5e5e5 !important;
   height: 650px;
 }
 

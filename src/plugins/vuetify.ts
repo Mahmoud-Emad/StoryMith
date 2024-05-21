@@ -27,14 +27,6 @@ const vuetify = createVuetify({
     themes: {
       dark: {
         dark: true,
-        colors: {
-          primary: "#1aa18f",
-        },
-        variables: {
-          "footer-color-link": "#fff",
-          "footer-color-header": "#74DDC3",
-          "speed-chip": "#424242",
-        },
       },
       light: {
         dark: false,

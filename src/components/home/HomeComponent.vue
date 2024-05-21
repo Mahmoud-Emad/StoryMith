@@ -15,7 +15,7 @@
 
 <script lang="ts">
 export default defineComponent({
-  mounted() { }
+  mounted() {}
 })
 </script>
 
